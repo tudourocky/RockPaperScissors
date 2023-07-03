@@ -46,27 +46,80 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
+function openGameoverScreen() {
+    document.getElementById("gameoverModal").classList.add('active');
+    document.getElementById("overlay").classList.add('active');
+}
 
-    while (true) {
-        let computerChoice = getComputerChoice();
-        let playerChoice = prompt("Enter either Rock, Paper, or Scissors");
-        let result = playRound(playerChoice, computerChoice);
-        if (result === "player won") {
-            playerScore++;
-        } else if (result === "computer won") {
-            computerScore++;
-        }
+function closeGameoverScreen() {
+    document.getElementById("gameoverModal").classList.remove('active');
+    document.getElementById("overlay").classList.remove('active');
+}
 
-        // check if game is over
-        if (playerScore === 3) {
-            return "player won";
-        } else if (computerScore === 3) {
-            return "computer won";
-        }
+function endGame(winner) {
+    if(winner === "player") document.getElementById("result").innerHTML = 'The computer has won!';
+    else document.getElementById("result").innerHTML = 'The player has won!';
+    openGameoverScreen();
+}
+
+
+let playerScore = 0;
+let computerScore = 0;
+
+function handleClick(playerSelection) {
+    let roundResult;
+    let computerChoice = getComputerChoice();
+
+    if (playerSelection === "rock") {
+        roundResult = playRound("rock", computerChoice);
+    } else if (playerSelection === "paper") {
+        roundResult = playRound("paper", computerChoice);
+    } else if (playerSelection === "scissors") {
+        roundResult = playRound("scissors", computerChoice);
+    }
+
+    if (roundResult === "player won") {
+        playerScore++;
+        document.getElementById("playerScore").innerHTML = `Player Score: ${playerScore}`;
+    } else if (roundResult === "computer won") {
+        computerScore++;
+        document.getElementById("computerScore").innerHTML = `Computer Score: ${computerScore}`;
+    }
+
+    // check if game is over
+    if (playerScore === 5) {
+        endGame("player");
+        return;
+    } else if (computerScore === 5) {
+        endGame("computer");
+        return;
     }
 }
 
-console.log(game());
+
+const rockBtn = document.querySelector('#rock');
+const paperBtn = document.querySelector('#paper');
+const scissorsBtn = document.querySelector('#scissors');
+
+
+rockBtn.addEventListener('click', () => {
+    handleClick("rock");
+});
+
+paperBtn.addEventListener('click', () => {
+    handleClick("paper");
+});
+
+scissorsBtn.addEventListener('click', () => {
+    handleClick("scissors");
+});
+
+function playAgain() {
+    document.getElementById("restartBtn").addEventListener('click', () => {
+        playerScore = 0;
+        computerScore = 0;
+        document.getElementById("computerScore").innerHTML = "Computer Score: 0";
+        document.getElementById("playerScore").innerHTML = "Player Score: 0";
+        closeGameoverScreen();
+    });
+}

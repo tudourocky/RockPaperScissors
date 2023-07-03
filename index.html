@@ -6,9 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <script src="script.js"></script>
     <h1>Rock Paper Scissors</h1>
+    <button id="rock">rock</button>
+    <button id="paper">paper</button>
+    <button id="scissors">scissors</button>
+    <p id="playerScore">Player Score: 0</p>
+    <p id="computerScore">Computer Score: 0</p>
+    <h3 id="result">Who is going to be the winner?</h3>
+
+    <div class="modal" id="gameoverModal">
+        <p class="modal-title" id="gameoverText"></p>
+        <button class="btn-restart" id="restartBtn">Play Again</button>
+    </div>
+    <div class="overlay" id="overlay"></div>
 </body>
 </html>
